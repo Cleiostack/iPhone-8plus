@@ -314,6 +314,8 @@ const Calendar = () =>{
 
 
 const music = () => {
+   screenDisplay.innerHTML = ''
+   let timeHour = date.toLocaleTimeString();
    screenDisplay.innerHTML = `
     <div class="top"> 
     <div class="networkSide">
@@ -357,5 +359,31 @@ const music = () => {
 
 
 const camera = () =>{
-   
+   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    console.log('getUserMedia is supported.');
+   } else {
+    console.log('getUserMedia is not supported in this browser.');
+   }
 }
+
+const startCamera = () => {
+
+    const constraints = {
+        video: true,  
+        audio: false 
+    };
+
+    navigator.mediaDevices.getUserMedia(constraints)
+        .then((stream) => {
+            const video = document.querySelector('video');
+            
+            video.srcObject = stream;
+            
+            video.play();
+        })
+        .catch((error) => {
+            console.error('Error accessing the camera: ', error);
+        });
+};
+
+
